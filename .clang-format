@@ -1,0 +1,10 @@
+AlignOperands: DontAlign
+AllowShortFunctionsOnASingleLine: Empty
+BreakBeforeBraces: Allman
+ColumnLimit: 120
+EmptyLineBeforeAccessModifier: Never
+FixNamespaceComments: false
+IndentAccessModifiers: true
+IndentCaseLabels: true
+IndentWidth: 2 
+NamespaceIndentation: All
