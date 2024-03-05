@@ -25,8 +25,8 @@ SOFTWARE.
 // C headers:
 #include <stdbool.h>
 
-// SDL headers:
-#include <SDL2/SDL.h>
+// Example headers:
+#include <example/line-renderer.h>
 
 void render_bresenham_line(SDL_Renderer *p_renderer, int p_x1, int p_y1, int p_x2, int p_y2)
 {
@@ -63,7 +63,6 @@ void render_bresenham_line(SDL_Renderer *p_renderer, int p_x1, int p_y1, int p_x
   bool shallow = xDiffAbs - yDiffAbs >= 0;
 
   // Frame of reference.
-
   int a, b;
   int *x, *y;
   int aDiff, bDiff;
