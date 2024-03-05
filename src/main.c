@@ -89,7 +89,7 @@ int main(void)
   // Main loop.
   while (running)
   {
-    // Wait for the quit signal.
+    // Scan the event queue for the quit signal.
     while (SDL_PollEvent(&event))
     {
       if (event.type == SDL_QUIT)
@@ -110,7 +110,7 @@ int main(void)
     SDL_SetRenderDrawColor(renderer, 0, 255, 0, 255);
     SDL_RenderFillRect(renderer, &endMarker);
 
-    // Set the line in white.
+    // Draw the line in white.
     SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
     render_bresenham_line(renderer, x1, y1, x2, y2);
 
