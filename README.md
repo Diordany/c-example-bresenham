@@ -64,7 +64,7 @@ The renderer must first figure out in which octant with respect to $(x_1, y_1)$ 
 ## Calculating the Slope
 Let's consider the mathematical representation of a linear function:
 
-$$y = \frac{\Delta y}{\Delta x}x + y_0 = \frac{y_2 - y_1}{x_2 - x_1}x + y_0$$
+$$y = \frac{\Delta y}{\Delta x}(x - x_0) + y_0 = \frac{y_2 - y_1}{x_2 - x_1}(x - x_0) + y_0$$
 
 In this case, we can see that the slope is $\frac{\Delta y}{\Delta x}$, so we can start off by calculating the displacement $(\Delta x, \Delta y)$ from the starting point $(x_1, y_1)$ to the end of the line $(x_2, y_2)$:
 
@@ -139,14 +139,14 @@ int aInc, bInc;
 int aTerm;
 ```
 
-The first pair (`a` and `b`) represents a point $(a_i, b_i)$ in the frame of reference. The initial point $(a_0, b_0)$ is determined by:
+The first pair (`a` and `b`) represents a point $(a_i, b_i)$ in the frame of reference. The initial point $(a_1, b_1)$ is determined by:
 
-$$a_0 = \begin{cases}
+$$a_1 = \begin{cases}
   x_1 & \quad\text{if}\quad |\Delta x| - |\Delta y| \ge 0\\
   y_1 & \quad\text{if}\quad |\Delta x| - |\Delta y| \lt 0\\
 \end{cases}$$
 
-$$b_0 =
+$$b_1 =
 \begin{cases}
   y_1 & \quad\text{if}\quad |\Delta x| - |\Delta y| \ge 0\\
   x_1 & \quad\text{if}\quad |\Delta x| - |\Delta y| \lt 0\\
@@ -216,7 +216,7 @@ $$b_+ =
 
 Finally the last variable `aTerm` is used to terminate the drawing procedure. It sits just outside the bounds of the line and is defined by:
 
-$$a_{f + 1} =
+$$a_{n + 1} =
 \begin{cases}
   x_2 + a_+ & \quad\text{if}\quad |\Delta x| - |\Delta y| \ge 0\\
   y_2 + a_+ & \quad\text{if}\quad |\Delta x| - |\Delta y| \lt 0
@@ -224,7 +224,7 @@ $$a_{f + 1} =
 
 The final value of `a` is given by:
 
-$$a_f =
+$$a_n =
 \begin{cases}
   x_2 & \quad\text{if}\quad |\Delta x| - |\Delta y| \ge 0\\
   y_2 & \quad\text{if}\quad |\Delta x| - |\Delta y| \lt 0
@@ -269,7 +269,7 @@ else
 
 ## The Rendering Procedure
 
-Now that the frame of reference is set, we can move on to the rendering procedure. Let's start with the $a_i$ variable, which really simple actually, because the procedure just iterates over the range of $[a_0, a_f]$.
+Now that the frame of reference is set, we can move on to the rendering procedure. Let's start with the $a_i$ variable, which really simple actually, because the procedure just iterates over the range of $[a_1, a_n]$.
 
 The $b_i$ value requires more explanation. Bresenham [[1]](#1) presented a clever method to figure out the relation between $b_i$ and $a_i$ without floating point arithmetic and without multiplication or division. For every value of $a_i$, the algorithm should decide whether or not to increment the value of $b_i$ [[1]](#1). The decision is based on which point is closer to the ideal line. The distance between the ideal line and the points $(a_i, b_i)$ and $(a_i, b_i + a_+)$ are given by $r$ and $q$ respectively. So the new value of $b_i$ is determined with:
 
@@ -281,25 +281,49 @@ $$b_i =
 
 However, we're not going to figure out the values of $r$ and $q$, because Bresenham derived a more convenient way to test whether $r - q$ is positive or not [[1]](#1). Deriving the equation is beyond the scope of this example, but the paper does an excellent job at describing how to derive it. Bresenham expressed the sign of $r - q$ in terms of $\Delta a$ and $\Delta b$, which is convenient, because we already figured those out. The following recursive relation was presented in [[1]](#1):
 
-$$D_{i + 1} =
+$$\delta_{i + 1} =
 \begin{cases}
-  D_i + 2\Delta b - 2\Delta a & \quad\text{if}\quad D_i \ge 0\\
-  D_i + 2\Delta b & \quad\text{if}\quad D_i \lt 0\\
+  \delta_i + 2\Delta b - 2\Delta a & \quad\text{if}\quad \delta_i \ge 0\\
+  \delta_i + 2\Delta b & \quad\text{if}\quad \delta_i \lt 0\\
 \end{cases}$$
 
 For which the initial value is set with [[1]](#1):
 
-$$D_0 = 2\Delta b - \Delta a$$
+$$\delta_1 = 2\Delta b - \Delta a$$
 
 Utilizing this expression, the value of $b_i$ can now be determined with:
 
 $$b_i =
 \begin{cases}
-  b_{i - 1} + b_+ & \quad\text{if}\quad D_i \ge 0\\
-  b_{i - 1} & \quad\text{if}\quad D_i \lt 0\\
+  b_{i - 1} + b_+ & \quad\text{if}\quad \delta_i \ge 0\\
+  b_{i - 1} & \quad\text{if}\quad \delta_i \lt 0\\
 \end{cases}$$
 
-Now that we've got both $a_i$ and $b_i$ covered, we're ready to implement the rendering procedure:
+After closer examination, we can see that that the equations for $\delta_1$ and $\delta_{i + 1}$ are very similar to the edge function from [[2]](#2). Let's consider the mathematical representation of a linear function again, but this time for the frame of reference:
+
+$$b = \frac{\Delta b}{\Delta a}(a - a_0) + b_0$$
+
+If we rewrite this, we get a special case of the edge function from [[2]](#2), where the function is equal to 0:
+
+$$\Delta b (a - a_0) - \Delta a (b - b_0) = 0$$
+
+The edge function detects how much the point $(a, b)$ deviates from the ideal line [[2]](#2). It therefore makes sense that the function would output 0 for every point in the linear function. So let's now consider a more general form of the edge function:
+
+$\delta(a^\prime,b^\prime) = \Delta b(a^\prime - a_0) - \Delta a(b^\prime - b_0)$
+
+We can now see the relation between $\delta_1$ and $\delta_{i + 1}$ and the edge function from [[2]](#2):
+
+$$\delta_1 = \delta(a_0 + 2, b_0 + 1) = 2\Delta b - \Delta a$$
+
+$$\delta_{i + 1} =
+\begin{cases}
+  \delta_i + \delta(a_0 + 2, b_0 + 2) = \delta_i + 2\Delta b - 2\Delta a & \quad\text{if}\quad \delta_i \ge 0\\
+  \delta_i + \delta(a_0 + 2, b_0) = \delta_i + 2\Delta b & \quad\text{if}\quad \delta_i \lt 0\\
+\end{cases}$$
+
+As you can see, expression for $\delta_{i + 1}$ compensates for incrementing the $a_i$ and $b_i$ variables, while $\delta_1$ sets an initial offset.
+
+Okay, enough ramling for now, let's see the actual C implementation:
 
 ```c
 int sign = bDiff + bDiff - aDiff;
@@ -329,6 +353,7 @@ For such a simple concept as drawing a line, the Bresenham algorithm turned out 
 # References
 
 <a id="1">[1]</a> 
-J. E. Bresenham,
-"Algorithm for computer control of a digital plotter" 
-*IBM Systems Journal*, 1965.
+J. E. Bresenham, "Algorithm for computer control of a digital plotter" *IBM Systems Journal*, 1965.
+
+<a id="1">[2]</a>
+J. Pineda, "A Parallel Algorithm for Polygon Rasterization" **Computer Graphics**, vol. 22, no. 4, Aug. 1988
