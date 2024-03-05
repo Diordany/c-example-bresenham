@@ -326,22 +326,19 @@ As you can see, expression for $\delta_{i + 1}$ compensates for incrementing the
 Okay, enough ramling for now, let's see the actual C implementation:
 
 ```c
-int sign = bDiff + bDiff - aDiff;
+int error = bDiff + bDiff - aDiff;
 
 while (a != aTerm)
 {
   SDL_RenderDrawPoint(p_renderer, *x, *y);
 
   a += aInc;
+  error += bDiff + bDiff;
 
-  if (sign >= 0)
+  if (error >= 0)
   {
     b += bInc;
-    sign += bDiff + bDiff - aDiff - aDiff;
-  }
-  else
-  {
-    sign += bDiff + bDiff;
+    error -= aDiff + aDiff;
   }
 }
 ```

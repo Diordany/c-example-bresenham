@@ -103,7 +103,7 @@ void render_bresenham_line(SDL_Renderer *p_renderer, int p_x1, int p_y1, int p_x
   }
 
   // The sign of this value decides whether or not b should be incremented.
-  int sign = bDiff + bDiff - aDiff;
+  int error = bDiff + bDiff - aDiff;
 
   // Draw until the end of the line is reached.
   while (a != aTerm)
@@ -111,15 +111,12 @@ void render_bresenham_line(SDL_Renderer *p_renderer, int p_x1, int p_y1, int p_x
     SDL_RenderDrawPoint(p_renderer, *x, *y);
 
     a += aInc;
+    error += bDiff + bDiff;
 
-    if (sign >= 0)
+    if (error >= 0)
     {
       b += bInc;
-      sign += bDiff + bDiff - aDiff - aDiff;
-    }
-    else
-    {
-      sign += bDiff + bDiff;
+      error -= aDiff + aDiff;
     }
   }
 }
