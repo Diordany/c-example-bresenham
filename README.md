@@ -279,7 +279,7 @@ $$b_i =
   b_{i - 1} & \quad\text{if}\quad r - q \lt 0\\
 \end{cases}$$
 
-However, we're not going to figure out the values of $p$ and $q$, because Bresenham derived a more convenient way to test wheter $r - q$ is positive or not [[1]](#1). Deriving the equation is beyond the scope of this example, but the paper does an excellent job at describing how to derive it. Bresenham expressed the sign of $r - q$ in terms of $\Delta a$ and $\Delta b$, which is convenient, because we already figured those out. The following recursive relation was presented in [[1]](#1):
+However, we're not going to figure out the values of $r$ and $q$, because Bresenham derived a more convenient way to test whether $r - q$ is positive or not [[1]](#1). Deriving the equation is beyond the scope of this example, but the paper does an excellent job at describing how to derive it. Bresenham expressed the sign of $r - q$ in terms of $\Delta a$ and $\Delta b$, which is convenient, because we already figured those out. The following recursive relation was presented in [[1]](#1):
 
 $$D_{i + 1} =
 \begin{cases}
@@ -329,6 +329,6 @@ For such a simple concept as drawing a line, the Bresenham algorithm turned out 
 # References
 
 <a id="1">[1]</a> 
-Bresenham, J. E. (1998),
+J. E. Bresenham,
 "Algorithm for computer control of a digital plotter" 
 *IBM Systems Journal*, 1965.
