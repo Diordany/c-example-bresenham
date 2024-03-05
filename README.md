@@ -10,6 +10,11 @@ I want to demonstrate the line renderer presented by Bresenham in [[1]](#1), the
 
 - SDL2
 
+To install the dependencies on Arch Linux, run:
+```
+sudo pacman -S sdl2
+```
+
 ## Building
 
 To build the example, run:
