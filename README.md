@@ -324,7 +324,7 @@ while (a != aTerm)
 
 # Conclusion
 
-For such a simple concept as drawing a line, the Bresenham algorithm turned out to be more complex than I initially thought, and I learned a lot during my the process of implementing it as a software renderer. Also, deriving the equations myself gave me an opportunity to dust off my mathematical skills. I'm fascinated with image and video rendering techniques, and I'd like to learn a lot more about them in the future by working on projects like this.
+For such a simple concept as drawing a line, the Bresenham algorithm turned out to be more complex than I initially thought, and I learned a lot during the process of implementing it as a software renderer. Also, deriving the equations myself gave me an opportunity to dust off my mathematical skills. I'm fascinated with image and video rendering techniques, and I'd like to learn a lot more about them in the future by working on projects like this.
 
 # References
 
