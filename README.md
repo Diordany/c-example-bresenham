@@ -271,7 +271,7 @@ else
 
 Now that the frame of reference is set, we can move on to the rendering procedure. Let's start with the $a_i$ variable, which really simple actually, because the procedure just iterates over the range of $[a_1, a_n]$.
 
-The $b_i$ value requires more explanation. Bresenham [[1]](#1) presented a clever method to figure out the relation between $b_i$ and $a_i$ without floating point arithmetic and without multiplication or division. For every value of $a_i$, the algorithm should decide whether or not to increment the value of $b_i$ [[1]](#1). The decision is based on which point is closer to the ideal line. The distance between the ideal line and the points $(a_i, b_i)$ and $(a_i, b_i + a_+)$ are given by $r$ and $q$ respectively. So the new value of $b_i$ is determined with:
+The $b_i$ value requires more explanation. Bresenham [[1]](#1) presented a clever method to figure out the relation between $b_i$ and $a_i$ without floating point arithmetic and without multiplication or division. For every value of $a_i$, the algorithm should decide whether or not to increment the value of $b_i$ [[1]](#1). The decision is based on which point is closer to the ideal line. The distance between the ideal line and the points $(a_i, b_{i - 1})$ and $(a_i, b_{i - 1} + b_+)$ are given by $r$ and $q$ respectively. So the new value of $b_i$ is determined with:
 
 $$b_i =
 \begin{cases}
