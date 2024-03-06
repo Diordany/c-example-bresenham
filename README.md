@@ -1,4 +1,4 @@
-# C Example: Bresenham Line Renderer
+# Example: Bresenham Line Renderer (C)
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
