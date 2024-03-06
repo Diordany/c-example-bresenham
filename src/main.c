@@ -60,7 +60,7 @@ int main(void)
   }
 
   // Create an SDL renderer.
-  SDL_Renderer *renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_TARGETTEXTURE);
+  SDL_Renderer *renderer = SDL_CreateRenderer(window, -1, 0);
 
   if (renderer == NULL)
   {
