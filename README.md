@@ -350,7 +350,7 @@ For such a simple concept as drawing a line, the Bresenham algorithm turned out 
 # References
 
 <a id="1">[1]</a> 
-J. E. Bresenham, "Algorithm for computer control of a digital plotter" *IBM Systems Journal*, 1965.
+&nbsp; J. E. Bresenham, "Algorithm for computer control of a digital plotter" *IBM Systems Journal*, 1965.
 
 <a id="1">[2]</a>
-J. Pineda, "A Parallel Algorithm for Polygon Rasterization" *Computer Graphics*, vol. 22, no. 4, Aug. 1988.
+&nbsp; J. Pineda, "A Parallel Algorithm for Polygon Rasterization" *Computer Graphics*, vol. 22, no. 4, Aug. 1988.
