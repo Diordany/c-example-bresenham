@@ -45,7 +45,8 @@ run: $(bin)
 	$(bin)
 
 clean:
-	rm -rf $(dir_obj) $(dir_bin)
+	if [ -d $(dir_obj) ]; then rm -rf $(dir_obj); fi
+	if [ -d $(dir_bin) ]; then rm -rf $(dir_bin); fi
 
 # Directories
 $(dir_obj):
