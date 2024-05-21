@@ -37,6 +37,8 @@ obj_files := $(patsubst %,$(dir_obj)/%.o,$(obj_names))
 # Binary list:
 bin := $(dir_bin)/bresenham
 
+.phony: all rebuild run clean
+
 all: $(bin)
 
 rebuild: clean $(bin)
